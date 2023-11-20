@@ -33,7 +33,7 @@ public class Pickupobject: MonoBehaviour
             if (isCarrying && CanDisposeOfRubbish())
             {
                 DisposeOfRubbish();
-                UpdateScore();
+                ScoreManager.instance.AddPoint();
             }
             else if(isCarrying)
             {
@@ -102,23 +102,7 @@ public class Pickupobject: MonoBehaviour
         isCarrying = false;
     }
 
-    void UpdateScore()
-    {
-        score++;
-        Debug.Log("Score: " + score);
-    }
 
-    void ResetMaterial(GameObject obj)
-    {
-        Renderer renderer = obj.GetComponent<Renderer>();
-
-        // Check if the object has the HighlightObjectData component
-        HighlightObjectData data = obj.GetComponent<HighlightObjectData>();
-        if (data != null && data.originalMaterial != null)
-        {
-            renderer.material = data.originalMaterial;
-        }
-    }
 
 
 
