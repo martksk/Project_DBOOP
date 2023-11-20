@@ -7,41 +7,29 @@ public class Pickupobject: MonoBehaviour
     private GameObject carriedBox;
     private bool isCarrying = false;
     private GameObject lastHighlightedObject;
+    private RaycastHit hit;
 
     public Transform carryPosition;
     public Transform releasePosition;
     public float detectionRange = 0.5f;
     public Transform raycastOrigin;
-    public Material normalMaterial;
     public Material highlightMaterial;
     public int score = 0;
 
     void Update()
     {
-        RaycastHit hit;
         Vector3 raycastStart = raycastOrigin.position;
+        if (hit.collider != null )
+        {
+            hit.collider.GetComponent<Highlight>()?.ToggleHighlight(false);
+        }
         if (Physics.Raycast(raycastStart, transform.forward, out hit, detectionRange))
         {
-            GameObject hitObject = hit.collider.gameObject;
-
-            if (hitObject.CompareTag("HighlightObject"))
-            {
-                hitObject.GetComponent<Renderer>().material = highlightMaterial;
-                lastHighlightedObject = hitObject;
-            }
-            else if (lastHighlightedObject != null)
-            {
-                lastHighlightedObject.GetComponent<Renderer>().material = normalMaterial;
-                lastHighlightedObject = null;
-            }
-        }
-        else if (lastHighlightedObject != null)
-        {
-            lastHighlightedObject.GetComponent<Renderer>().material = normalMaterial;
-            lastHighlightedObject = null;
+            hit.collider.GetComponent<Highlight>()?.ToggleHighlight(true);
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
+            Debug.DrawRay(raycastStart, transform.forward * detectionRange, Color.red, 1.0f);
             if (isCarrying && CanDisposeOfRubbish())
             {
                 DisposeOfRubbish();
@@ -119,4 +107,22 @@ public class Pickupobject: MonoBehaviour
         score++;
         Debug.Log("Score: " + score);
     }
+
+    void ResetMaterial(GameObject obj)
+    {
+        Renderer renderer = obj.GetComponent<Renderer>();
+
+        // Check if the object has the HighlightObjectData component
+        HighlightObjectData data = obj.GetComponent<HighlightObjectData>();
+        if (data != null && data.originalMaterial != null)
+        {
+            renderer.material = data.originalMaterial;
+        }
+    }
+
+
+
+
+
+
 }
