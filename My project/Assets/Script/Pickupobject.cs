@@ -27,7 +27,7 @@ public class Pickupobject: MonoBehaviour
         {
             hit.collider.GetComponent<Highlight>()?.ToggleHighlight(true);
         }
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             Debug.DrawRay(raycastStart, transform.forward * detectionRange, Color.red, 1.0f);
             if (isCarrying && CanDisposeOfRubbish())
