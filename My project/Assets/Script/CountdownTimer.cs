@@ -3,16 +3,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System;
 
 public class CountdownTimer : MonoBehaviour
 {
     public float countdownTime = 60f;  // Set your initial countdown time here
     public SceneLoader sl;
-    private Text countdownText;
+    private TMP_Text countdownText;
 
     private void Start()
     {
-        countdownText = GetComponentInChildren<Text>();
+        countdownText = GetComponentInChildren<TMP_Text>();
         UpdateTimerText();
         StartCountdown();
     }

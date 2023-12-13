@@ -9,12 +9,18 @@ public class Pickupobject: MonoBehaviour
     private RaycastHit hit;
     private int x=0;
     private int y=0;
+    private Animator animator;
 
     public Transform carryPosition;
     public Transform releasePosition;
     public float detectionRange = 0.5f;
     public Transform raycastOrigin;
     public int score = 0;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -87,7 +93,6 @@ public class Pickupobject: MonoBehaviour
                 carriedBox.transform.position = carryPosition.position;
                 carriedBox.transform.parent = transform;
                 isCarrying = true;
-                
             }
         }
         Debug.DrawRay(raycastStart, transform.forward * detectionRange, Color.red, 1.0f);
@@ -163,6 +168,5 @@ public class Pickupobject: MonoBehaviour
         x=0;
         y=0;
     }
-
 
 }
