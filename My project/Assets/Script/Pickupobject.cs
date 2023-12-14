@@ -15,7 +15,7 @@ public class Pickupobject: MonoBehaviour
     public Transform releasePosition;
     public float detectionRange = 0.5f;
     public Transform raycastOrigin;
-    public int score = 0;
+    public static int score = 0;
 
     void Start()
     {

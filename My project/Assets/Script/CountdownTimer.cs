@@ -8,10 +8,9 @@ using System;
 
 public class CountdownTimer : MonoBehaviour
 {
-    public float countdownTime = 60f;  // Set your initial countdown time here
+    public float countdownTime = 180.0f;  // Set your initial countdown time here
     public SceneLoader sl;
     private TMP_Text countdownText;
-
     private void Start()
     {
         countdownText = GetComponentInChildren<TMP_Text>();
@@ -21,7 +20,12 @@ public class CountdownTimer : MonoBehaviour
 
     private void UpdateTimerText()
     {
-        countdownText.text = Mathf.Ceil(countdownTime).ToString();
+        // Convert countdownTime to minutes and seconds
+        int minutes = Mathf.FloorToInt(countdownTime / 60);
+        int seconds = Mathf.FloorToInt(countdownTime % 60);
+
+        // Display the time in the TMP_Text
+        countdownText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     private void StartCountdown()
@@ -31,15 +35,26 @@ public class CountdownTimer : MonoBehaviour
 
     private void UpdateCountdown()
     {
-
-        countdownTime -= 1f;
-
-        if (countdownTime <= 0f)
+        if (countdownTime > 0)
+        {
+            countdownTime -= 1f;
+            UpdateTimerText();
+        }
+        else
         {
             countdownTime = 0f;
+            PlayerPrefs.SetInt("Score", ScoreManager.score);
+            PlayerPrefs.Save();
+            UpdateProgress();
             sl.LoadScene();
+            CancelInvoke("UpdateCountdown");
         }
-        UpdateTimerText();
-        
     }
+
+    private void UpdateProgress()
+    {
+        PlayerPrefs.SetInt("Level", 2);
+        PlayerPrefs.Save();
+    }
+
 }
