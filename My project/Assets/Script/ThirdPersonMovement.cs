@@ -39,24 +39,24 @@ public class ThirdPersonMovement : MonoBehaviour
             // rb.MovePosition(rb.position + moveDir.normalized * speed * Time.fixedDeltaTime);
             rb.velocity = moveDir.normalized * speed;
 
-            animator.SetBool("Walk", true);
+            // animator.SetBool("Walk", true);
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 speed = 6f;
-                animator.SetBool("Walk", false);
-                animator.SetBool("Run", true);
+                // animator.SetBool("Walk", false);
+                // animator.SetBool("Run", true);
             }
             else
             {
-                animator.SetBool("Run", false);
-                animator.SetBool("Walk", true);
+                // animator.SetBool("Run", false);
+                // animator.SetBool("Walk", true);
                 speed = 3f;
             }
         }
         else
         {
-            animator.SetBool("Walk", false);
-            animator.SetBool("Run", false);
+            // animator.SetBool("Walk", false);
+            // animator.SetBool("Run", false);
         }
     }
 }

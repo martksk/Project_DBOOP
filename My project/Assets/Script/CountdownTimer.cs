@@ -8,12 +8,14 @@ using System;
 
 public class CountdownTimer : MonoBehaviour
 {
-    public float countdownTime = 180.0f;  // Set your initial countdown time here
+    public static float countdownTime = 180.0f;  // Set your initial countdown time here
     public SceneLoader sl;
     private TMP_Text countdownText;
     private void Start()
     {
         countdownText = GetComponentInChildren<TMP_Text>();
+        countdownTime = 180.0f;
+        ScoreManager.score = 0;
         UpdateTimerText();
         StartCountdown();
     }
@@ -48,6 +50,8 @@ public class CountdownTimer : MonoBehaviour
             UpdateProgress();
             sl.LoadScene();
             CancelInvoke("UpdateCountdown");
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 
